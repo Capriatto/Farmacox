@@ -4,6 +4,9 @@
  */
 package interfaces;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
 /**
  *
  * @author Brayhan
@@ -13,6 +16,19 @@ public class Login_Usuario extends javax.swing.JFrame {
     /**
      * Creates new form Login_Usuario
      */
+    
+        String sql;
+        
+        //Esto es para preparar la consulta
+        PreparedStatement preparar;
+        
+        //Esto es para crear una instancia de la clase conexion
+        Conexion conexion= new Conexion();
+        
+        //Esto es para pasar a la conexion una nueva conexion Connection
+        Connection con= conexion.conexionBase();
+        
+        
     public Login_Usuario() {
         initComponents();
 
@@ -147,6 +163,8 @@ public class Login_Usuario extends javax.swing.JFrame {
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
         // TODO add your handling code here:
+        
+        
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     private void btnRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarseActionPerformed

@@ -6,6 +6,10 @@ package interfaces;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -17,7 +21,13 @@ public class Login_Usuario extends javax.swing.JFrame {
      * Creates new form Login_Usuario
      */
     
+        //Esto es para hacer la consulta
         String sql;
+        
+        String nick;
+        String contrasena;
+        String nickUsuario;
+        String contrasenaUsuario;
         
         //Esto es para preparar la consulta
         PreparedStatement preparar;
@@ -27,6 +37,9 @@ public class Login_Usuario extends javax.swing.JFrame {
         
         //Esto es para pasar a la conexion una nueva conexion Connection
         Connection con= conexion.conexionBase();
+        
+        //Result set
+        ResultSet result;
         
         
         
@@ -164,7 +177,31 @@ public class Login_Usuario extends javax.swing.JFrame {
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
         // TODO add your handling code here:
-        
+        try {
+
+            sql = "SELECT nickname, contraseña FROM usuario";
+
+            preparar = con.prepareStatement(sql);
+            result = preparar.executeQuery();
+            result.next();
+            nick = result.getString(1);
+            contrasena = result.getString(2);
+            
+            nickUsuario= txtNombre.getText();
+            contrasenaUsuario= txtIdentificacion.getText();
+            
+            System.out.println("El nick es: " + nick);
+            System.out.println("La contraseñan es: " + contrasena);
+            
+            if((nickUsuario.equals(nick)) && (contrasenaUsuario.equals(contrasena))){
+                principal prin= new principal();
+                prin.setVisible(true);
+                this.setVisible(false);
+            }
+           
+        } catch (SQLException ex) {
+            Logger.getLogger(Login_Usuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         
     }//GEN-LAST:event_btnIngresarActionPerformed

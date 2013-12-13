@@ -29,6 +29,7 @@ public class Login_Usuario extends javax.swing.JFrame {
         Connection con= conexion.conexionBase();
         
         
+        
     public Login_Usuario() {
         initComponents();
 
@@ -163,6 +164,7 @@ public class Login_Usuario extends javax.swing.JFrame {
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
         // TODO add your handling code here:
+        
         
         
     }//GEN-LAST:event_btnIngresarActionPerformed

@@ -178,17 +178,17 @@ public class Login_Usuario extends javax.swing.JFrame {
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
         // TODO add your handling code here:
         try {
-
+            nickUsuario= txtNombre.getText();
+            contrasenaUsuario= txtIdentificacion.getText();
+            
             sql = "SELECT nickname, contraseña FROM usuario";
 
+            System.out.println("Consulta " + sql);
             preparar = con.prepareStatement(sql);
             result = preparar.executeQuery();
             result.next();
             nick = result.getString(1);
             contrasena = result.getString(2);
-            
-            nickUsuario= txtNombre.getText();
-            contrasenaUsuario= txtIdentificacion.getText();
             
             System.out.println("El nick es: " + nick);
             System.out.println("La contraseñan es: " + contrasena);
@@ -197,6 +197,8 @@ public class Login_Usuario extends javax.swing.JFrame {
                 principal prin= new principal();
                 prin.setVisible(true);
                 this.setVisible(false);
+            }else{
+                System.out.println("No puede iniciar sesion");
             }
            
         } catch (SQLException ex) {

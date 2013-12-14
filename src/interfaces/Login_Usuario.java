@@ -32,11 +32,9 @@ public class Login_Usuario extends javax.swing.JFrame {
         //Esto es para preparar la consulta
         PreparedStatement preparar;
         
-        //Esto es para crear una instancia de la clase conexion
-        clases.Conexion conexion= new clases.Conexion();
+        Conexion con= new Conexion();
+       
         
-        //Esto es para pasar a la conexion una nueva conexion Connection
-        Connection con= conexion.conexionBase();
         
         //Result set
         ResultSet result;
@@ -184,7 +182,7 @@ public class Login_Usuario extends javax.swing.JFrame {
             sql = "SELECT nickname, contraseña FROM usuario";
 
             System.out.println("Consulta " + sql);
-            preparar = con.prepareStatement(sql);
+//            preparar = con.prepareStatement(sql);
             result = preparar.executeQuery();
             result.next();
             nick = result.getString(1);

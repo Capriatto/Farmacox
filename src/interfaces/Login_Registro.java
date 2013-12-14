@@ -4,7 +4,6 @@
  */
 package interfaces;
 
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,29 +17,20 @@ import java.util.logging.Logger;
  */
 public class Login_Registro extends javax.swing.JFrame {
 
-    
-        //Esto es para guardar en la base de datos lo que entre el usuario
-        String id;
-        String nombre;
-        String nick;
-        String contrasena;
-        String telefono;
-        //Esto es para guardar en la base de datos lo que entre el usuario
-        
-        //Esto es para la consulta
-        String sql;
-        
-        //Esto es para preparar la consulta
-        PreparedStatement preparar;
-        
-        //Esto es para crear una instancia de la clase conexion
-        clases.Conexion conexion= new clases.Conexion();
-        
-        //Esto es para pasar a la conexion una nueva conexion Connection
-        Connection con= conexion.conexionBase();
-        //Para traer el coso de la base de datos para la consulta
-        ResultSet result;
-    
+    //Esto es para guardar en la base de datos lo que entre el usuario
+    String id;
+    String nombre;
+    String nick;
+    String contrasena;
+    String telefono;
+    //Esto es para guardar en la base de datos lo que entre el usuario
+    //Esto es para la consulta
+    String sql;
+    //Esto es para preparar la consulta
+    PreparedStatement preparar;
+    //Para traer el coso de la base de datos para la consulta
+    ResultSet result;
+
     /**
      * Creates new form Login_Registro
      */
@@ -189,47 +179,47 @@ public class Login_Registro extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-            try {
-                // TODO add your handling code here:
-                
+        try {
+            // TODO add your handling code here:
+
             String sqlconsulta = "SELECT id FROM usuario";
 
             System.out.println("Consulta " + sqlconsulta);
-            preparar = con.prepareStatement(sqlconsulta);
-                
-                
-                //Esto es para guardar todo lo que entre el usuario y se lo vamos a asignar a las variables que estan arriba
-                result.next();
-                String autoIncrement= result.getString(1);
-                System.out.println("El autoincrement es: " + autoIncrement);
-            } catch (SQLException ex) {
-                Logger.getLogger(Login_Registro.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        
+//            preparar = con.prepareStatement(sqlconsulta);
+            Connection con = clases.Conexion.getConexion();
+            //Esto es para guardar todo lo que entre el usuario y se lo vamos a asignar a las variables que estan arriba
+            result.next();
+            String autoIncrement = result.getString(1);
+            System.out.println("El autoincrement es: " + autoIncrement);
+        } catch (SQLException ex) {
+            Logger.getLogger(Login_Registro.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         nombre = txtNombre.getText();
-        nick= txtNick.getText();
-        contrasena= txtContrasena.getText();
-        telefono= txtTelefono.getText();
-        
-        sql= "INSERT INTO usuario (nombre, nickname, contraseña, telefono) VALUES (?,?,?,?)";
-            try {
-                preparar= con.prepareStatement(sql);
-           
-                preparar.setString(1, id);
-                preparar.setString(2, nombre);
-                preparar.setString(3, nick);
-                preparar.setString(4, contrasena);
-                preparar.setString(5, telefono);
-                preparar.executeUpdate();
-                lblMensaje.setText("SE REGISTRO CON EXITO");
-                
-            } catch (SQLException ex) {
-                lblMensaje.setText("NO SE REGISTRO CON EXITO");
-                Logger.getLogger(Login_Registro.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-        
-        
+        nick = txtNick.getText();
+        contrasena = txtContrasena.getText();
+        telefono = txtTelefono.getText();
+
+        sql = "INSERT INTO usuario (nombre, nickname, contraseña, telefono) VALUES (?,?,?,?)";
+        try {
+            Connection con = clases.Conexion.getConexion();
+            preparar = con.prepareStatement(sql);
+
+            preparar.setString(1, id);
+            preparar.setString(2, nombre);
+            preparar.setString(3, nick);
+            preparar.setString(4, contrasena);
+            preparar.setString(5, telefono);
+            preparar.executeUpdate();
+            lblMensaje.setText("SE REGISTRO CON EXITO");
+
+        } catch (SQLException ex) {
+            lblMensaje.setText("NO SE REGISTRO CON EXITO");
+            Logger.getLogger(Login_Registro.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

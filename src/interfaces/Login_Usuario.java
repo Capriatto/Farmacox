@@ -187,7 +187,7 @@ public class Login_Usuario extends javax.swing.JFrame {
             nickUsuario= txtNickname.getText().trim();
             contrasenaUsuario= txtContraseña.getText().trim();
             
-            sql = "SELECT nickname, contraseña FROM usuario";
+            sql = "SELECT nickname, contraseña FROM usuario WHERE nickname="+"\'"+nickUsuario+"\'"+";";
 
 //            preparar = con.prepareStatement(sql);
             result = clases.Conexion.consulta(sql);

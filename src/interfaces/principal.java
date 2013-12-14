@@ -18,7 +18,7 @@ String labelNick;
     public principal(String nick) {
         labelNick=nick;
         initComponents();
-        lblBienvenida.setText("Bienvenid@:  "+ labelNick);
+        lblBienvenida.setText("Bienvenid@: "+ labelNick);
         setLocationRelativeTo(null);
     }
 

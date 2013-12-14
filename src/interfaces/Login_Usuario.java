@@ -33,7 +33,7 @@ public class Login_Usuario extends javax.swing.JFrame {
         PreparedStatement preparar;
         
         //Esto es para crear una instancia de la clase conexion
-        Conexion conexion= new Conexion();
+        clases.Conexion conexion= new clases.Conexion();
         
         //Esto es para pasar a la conexion una nueva conexion Connection
         Connection con= conexion.conexionBase();

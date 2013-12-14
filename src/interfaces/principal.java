@@ -45,6 +45,18 @@ public class principal extends javax.swing.JFrame {
         txtValorComercial = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
         jTabbedPane2 = new javax.swing.JTabbedPane();
+        jToolBar2 = new javax.swing.JToolBar();
+        jPanel2 = new javax.swing.JPanel();
+        btnAgregarProducto1 = new javax.swing.JButton();
+        btnVerProducto1 = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        txtCodigoProducto1 = new javax.swing.JTextField();
+        btnCategoriaProducto1 = new javax.swing.JButton();
+        txtNombreProducto1 = new javax.swing.JTextField();
+        txtValorComercial1 = new javax.swing.JTextField();
+        jButton5 = new javax.swing.JButton();
         jTabbedPane3 = new javax.swing.JTabbedPane();
         jTabbedPane4 = new javax.swing.JTabbedPane();
         jLabel5 = new javax.swing.JLabel();
@@ -170,6 +182,108 @@ public class principal extends javax.swing.JFrame {
         jToolBar1.add(jPanel1);
 
         jTabbedPane1.addTab("Productos", jToolBar1);
+
+        jToolBar2.setRollover(true);
+
+        btnAgregarProducto1.setText("Agregar producto");
+        btnAgregarProducto1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarProducto1ActionPerformed(evt);
+            }
+        });
+
+        btnVerProducto1.setText("ver productos");
+        btnVerProducto1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerProducto1ActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setText("nombre producto:");
+
+        jLabel7.setText("valor comercial:");
+
+        jLabel8.setText("codigo producto:");
+
+        btnCategoriaProducto1.setText("categorias de productos");
+        btnCategoriaProducto1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCategoriaProducto1ActionPerformed(evt);
+            }
+        });
+
+        txtValorComercial1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtValorComercial1ActionPerformed(evt);
+            }
+        });
+
+        jButton5.setText("jButton4");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(btnAgregarProducto1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnVerProducto1)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnCategoriaProducto1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addComponent(jLabel8)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(txtCodigoProducto1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel7)
+                                        .addComponent(jLabel6))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txtNombreProducto1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtValorComercial1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addContainerGap(107, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton5)
+                        .addGap(29, 29, 29))))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAgregarProducto1)
+                    .addComponent(btnVerProducto1)
+                    .addComponent(btnCategoriaProducto1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(txtCodigoProducto1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(7, 7, 7)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(txtNombreProducto1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(txtValorComercial1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(133, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jButton5))
+        );
+
+        jToolBar2.add(jPanel2);
+
+        jTabbedPane2.addTab("Productos", jToolBar2);
+
         jTabbedPane1.addTab("Registrar venta", jTabbedPane2);
         jTabbedPane1.addTab("Consultar enfermedad por síntoma", jTabbedPane3);
         jTabbedPane1.addTab("Reportes", jTabbedPane4);
@@ -227,6 +341,22 @@ public class principal extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtValorComercialActionPerformed
 
+    private void btnAgregarProducto1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarProducto1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAgregarProducto1ActionPerformed
+
+    private void btnVerProducto1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerProducto1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnVerProducto1ActionPerformed
+
+    private void btnCategoriaProducto1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriaProducto1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCategoriaProducto1ActionPerformed
+
+    private void txtValorComercial1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtValorComercial1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtValorComercial1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -263,15 +393,23 @@ public class principal extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarProducto;
+    private javax.swing.JButton btnAgregarProducto1;
     private javax.swing.JButton btnCategoriaProducto;
+    private javax.swing.JButton btnCategoriaProducto1;
     private javax.swing.JButton btnVerProducto;
+    private javax.swing.JButton btnVerProducto1;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
@@ -279,8 +417,12 @@ public class principal extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane4;
     private javax.swing.JTable jTable1;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JToolBar jToolBar2;
     private javax.swing.JTextField txtCodigoProducto;
+    private javax.swing.JTextField txtCodigoProducto1;
     private javax.swing.JTextField txtNombreProducto;
+    private javax.swing.JTextField txtNombreProducto1;
     private javax.swing.JTextField txtValorComercial;
+    private javax.swing.JTextField txtValorComercial1;
     // End of variables declaration//GEN-END:variables
 }

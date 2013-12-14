@@ -7,6 +7,7 @@ package interfaces;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,6 +20,7 @@ public class Login_Registro extends javax.swing.JFrame {
 
     
         //Esto es para guardar en la base de datos lo que entre el usuario
+        String id;
         String nombre;
         String nick;
         String contrasena;
@@ -32,10 +34,12 @@ public class Login_Registro extends javax.swing.JFrame {
         PreparedStatement preparar;
         
         //Esto es para crear una instancia de la clase conexion
-        Conexion conexion= new Conexion();
+        clases.Conexion conexion= new clases.Conexion();
         
         //Esto es para pasar a la conexion una nueva conexion Connection
         Connection con= conexion.conexionBase();
+        //Para traer el coso de la base de datos para la consulta
+        ResultSet result;
     
     /**
      * Creates new form Login_Registro
@@ -185,9 +189,23 @@ public class Login_Registro extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+            try {
+                // TODO add your handling code here:
+                
+            String sqlconsulta = "SELECT id FROM usuario";
+
+            System.out.println("Consulta " + sqlconsulta);
+            preparar = con.prepareStatement(sqlconsulta);
+                
+                
+                //Esto es para guardar todo lo que entre el usuario y se lo vamos a asignar a las variables que estan arriba
+                result.next();
+                String autoIncrement= result.getString(1);
+                System.out.println("El autoincrement es: " + autoIncrement);
+            } catch (SQLException ex) {
+                Logger.getLogger(Login_Registro.class.getName()).log(Level.SEVERE, null, ex);
+            }
         
-        //Esto es para guardar todo lo que entre el usuario y se lo vamos a asignar a las variables que estan arriba
         nombre = txtNombre.getText();
         nick= txtNick.getText();
         contrasena= txtContrasena.getText();
@@ -197,10 +215,11 @@ public class Login_Registro extends javax.swing.JFrame {
             try {
                 preparar= con.prepareStatement(sql);
            
-                preparar.setString(1, nombre);
-                preparar.setString(2, nick);
-                preparar.setString(3, contrasena);
-                preparar.setString(4, telefono);
+                preparar.setString(1, id);
+                preparar.setString(2, nombre);
+                preparar.setString(3, nick);
+                preparar.setString(4, contrasena);
+                preparar.setString(5, telefono);
                 preparar.executeUpdate();
                 lblMensaje.setText("SE REGISTRO CON EXITO");
                 

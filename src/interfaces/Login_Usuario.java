@@ -4,6 +4,7 @@
  */
 package interfaces;
 
+import java.awt.Toolkit;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -202,6 +203,7 @@ public class Login_Usuario extends javax.swing.JFrame {
             this.dispose();
             principal prin= new principal(nick);
             prin.setVisible(true);
+            Toolkit.getDefaultToolkit().beep();
             }else{
                 System.out.println("No puede iniciar sesion");
             }

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package interfaces;
+package logica;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -191,7 +191,7 @@ public class Login_Registro extends javax.swing.JFrame {
 
         sql = "INSERT INTO usuario (nombre, nickname, contraseña, telefono) VALUES (?,?,?,?)";
         try {
-            Connection con = clases.Conexion.getConexion();
+            Connection con = bd.Conexion.getConexion();
             preparar = con.prepareStatement(sql);
 
             preparar.setString(1, nombre);

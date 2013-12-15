@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package interfaces;
+package logica;
 
 import java.awt.Toolkit;
 import java.sql.PreparedStatement;
@@ -191,7 +191,7 @@ public class Login_Usuario extends javax.swing.JFrame {
             sql = "SELECT nickname, contraseña FROM usuario WHERE nickname="+"\'"+nickUsuario+"\'"+";";
 
 //            preparar = con.prepareStatement(sql);
-            result = clases.Conexion.consulta(sql);
+            result = bd.Conexion.consulta(sql);
             result.next();
             nick = result.getString(1);
             contrasena = result.getString(2);

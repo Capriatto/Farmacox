@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import Atxy2k.CustomTextField.RestrictedTextField;
 
 /**
  *
@@ -30,7 +31,12 @@ public final class principal extends javax.swing.JFrame {
         lblBienvenida.setText("Bienvenid@: " + labelNick);
         llenarCategorias();
         llenarProveedores();
-
+        RestrictedTextField res= new RestrictedTextField(txtCodigoProducto);
+        RestrictedTextField res1= new RestrictedTextField(txtValor);
+        RestrictedTextField res2= new RestrictedTextField(txtValorComercial);
+        res.setLimit(3);
+        res1.setOnlyNums(true);
+        res2.setOnlyNums(true);
 
     }
 

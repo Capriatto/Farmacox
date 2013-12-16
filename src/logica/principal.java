@@ -210,7 +210,6 @@ public final class principal extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
         jtConsulta = new javax.swing.JTable();
-        jButton3 = new javax.swing.JButton();
         btnPrueba = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
@@ -463,8 +462,6 @@ public final class principal extends javax.swing.JFrame {
 
         jScrollPane4.setViewportView(jtConsulta);
 
-        jButton3.setText("Sintomas mas comunes");
-
         btnPrueba.setText("Consultar");
         btnPrueba.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -485,9 +482,7 @@ public final class principal extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(txtPrimerSintoma, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(40, 40, 40)
-                        .addComponent(btnPrueba)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton3)))
+                        .addComponent(btnPrueba)))
                 .addGap(252, 252, 252)
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -503,7 +498,6 @@ public final class principal extends javax.swing.JFrame {
                     .addComponent(txtPrimerSintoma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1)
                     .addComponent(jButton2)
-                    .addComponent(jButton3)
                     .addComponent(btnPrueba))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -709,7 +703,6 @@ public final class principal extends javax.swing.JFrame {
     public javax.swing.JComboBox cboProveedor;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

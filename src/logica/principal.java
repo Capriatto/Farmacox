@@ -12,6 +12,8 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import Atxy2k.CustomTextField.RestrictedTextField;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -64,6 +66,7 @@ public final class principal extends javax.swing.JFrame {
             ps.setInt(6, proveedorEscogido);
             ps.executeUpdate();
             lblAviso.setText("¡Producto registrado!.");
+            tabla(); //actualizar tabla con el producto nuevo! :)
         } catch (Exception e) {
             lblAviso.setText("No se pudo registrar el producto.");
 
@@ -72,21 +75,40 @@ public final class principal extends javax.swing.JFrame {
 
     public void tabla() throws SQLException {
 //        Modelando tabla
-        
+
         Object columnNames[] = {"Codigo", "Nombre", "Valor", "Valor Comercial", "Categoria", "Proveedor"};
         DefaultTableModel mTableModel = new DefaultTableModel(null, columnNames);
         Tabla.setModel(mTableModel);
 //  Conectando con base de datos 
         Connection con = bd.Conexion.getConexion();
-        PreparedStatement ps = con.prepareStatement("SELECT pr.id, pr.nombre, precio, precio_comercial, c.nombre, p.nombre_empresa FROM producto pr, categoria c, proveedor  p WHERE pr.categoria_id= c.id and pr.proveedor_id=p.id order by pr.nombre asc");
+        PreparedStatement ps = con.prepareStatement("SELECT pr.id, pr.nombre, precio, precio_comercial, c.nombre, p.nombre_empresa FROM producto pr, categoria c, proveedor  p WHERE pr.estado=1 and pr.categoria_id= c.id and pr.proveedor_id=p.id order by pr.nombre asc");
         ResultSet rs = ps.executeQuery();
         Object[] rows;
         while (rs.next()) {
             rows = new Object[]{rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6)};
-          //Agregando filas a la tabla
+            //Agregando filas a la tabla
             mTableModel.addRow(rows);
         }
 
+    }
+
+    public void eliminarProducto() {
+        try {
+            int dialogResult = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea eliminar este producto?", "Warning", JOptionPane.YES_NO_OPTION);
+            if (dialogResult == JOptionPane.YES_OPTION) {
+                DefaultTableModel model = (DefaultTableModel) Tabla.getModel();
+                int rowSelected = Tabla.getSelectedRow();
+                Connection conexion = bd.Conexion.getConexion();
+                Object ahi = model.getValueAt(rowSelected, 0);
+                PreparedStatement ps = conexion.prepareStatement("UPDATE producto SET estado=0 where id=".concat(String.valueOf(ahi)));
+                ps.executeUpdate();
+                model.removeRow(rowSelected);
+                tabla();
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -122,6 +144,7 @@ public final class principal extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         Tabla = new javax.swing.JTable();
         lblAviso = new javax.swing.JLabel();
+        btnEliminarProd = new javax.swing.JButton();
         jTabbedPane4 = new javax.swing.JTabbedPane();
         jTabbedPane5 = new javax.swing.JTabbedPane();
         lblBienvenida = new javax.swing.JLabel();
@@ -213,6 +236,13 @@ public final class principal extends javax.swing.JFrame {
         lblAviso.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblAviso.setForeground(new java.awt.Color(0, 153, 255));
 
+        btnEliminarProd.setText("Eliminar prod.");
+        btnEliminarProd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarProdActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -222,8 +252,14 @@ public final class principal extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 547, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblAviso, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(lblAviso, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnEliminarProd)
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -281,9 +317,11 @@ public final class principal extends javax.swing.JFrame {
                     .addComponent(btnGuardarProducto))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblAviso, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(163, 163, 163))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnEliminarProd)
+                        .addGap(150, 150, 150))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -307,11 +345,11 @@ public final class principal extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 598, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(26, Short.MAX_VALUE))
+                        .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 683, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 354, Short.MAX_VALUE)
                         .addComponent(lblBienvenida, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         layout.setVerticalGroup(
@@ -322,8 +360,8 @@ public final class principal extends javax.swing.JFrame {
                         .addGap(19, 19, 19)
                         .addComponent(jLabel1))
                     .addComponent(lblBienvenida, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTabbedPane1)
                 .addGap(23, 23, 23))
         );
 
@@ -349,6 +387,10 @@ public final class principal extends javax.swing.JFrame {
     private void txtValorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtValorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtValorActionPerformed
+
+    private void btnEliminarProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarProdActionPerformed
+        eliminarProducto();        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEliminarProdActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -385,6 +427,7 @@ public final class principal extends javax.swing.JFrame {
 //    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable Tabla;
+    private javax.swing.JButton btnEliminarProd;
     public javax.swing.JButton btnGuardarProducto;
     private javax.swing.JComboBox cboCategoria;
     public javax.swing.JComboBox cboProveedor;

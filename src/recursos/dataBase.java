@@ -26,7 +26,7 @@ public class dataBase {
     private static void construyendoConexion() throws SQLException {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            dataBase.connection = DriverManager.getConnection("jdbc:mysql://localhost/krono","root","");
+            dataBase.connection = DriverManager.getConnection("jdbc:mysql://localhost/farmacox","root","");
             System.out.println("Database connection was successful!");
         } catch (ClassNotFoundException e) {
             System.out.println("ClassNotFoundException(contruyendoConexion)  : " + e.getMessage());

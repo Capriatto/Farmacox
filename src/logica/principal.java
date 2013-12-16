@@ -12,7 +12,9 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import Atxy2k.CustomTextField.RestrictedTextField;
+import clases.ConsultaEnfermedades;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JButton;
@@ -27,6 +29,21 @@ import javax.swing.table.DefaultTableModel;
 public final class principal extends javax.swing.JFrame {
 
     String labelNick;
+    public ResultSet mostrarResultado;
+    public ArrayList resultadoConsulta=new ArrayList();
+    public ArrayList resultadoConsulta2=new ArrayList();
+    public ArrayList resultadoConsulta3=new ArrayList();
+    public ArrayList enfermedadSintomas=new ArrayList();
+    public String primerSintoma;
+    public String primerEnfermedad;
+    public String enfermedad;
+    public String idSintoma;
+    public String idGravedad;
+    public String idEnfermedad;
+    DefaultTableModel model;
+    String sql;
+     Connection conection = (Connection) recursos.dataBase.getConexion();//Representa una sesión con la conexión a la base de datos
+    PreparedStatement prepararConsulta;//Es el canal a través del cual se le envían instrucciones SQL
 
     /**
      * Creates new form principal
@@ -84,7 +101,7 @@ public final class principal extends javax.swing.JFrame {
         Tabla.setModel(mTableModel);
 //  Conectando con base de datos 
         Connection con = bd.Conexion.getConexion();
-        PreparedStatement ps = con.prepareStatement("SELECT pr.id, pr.nombre, precio, precio_comercial, c.nombre, p.nombre_empresa FROM producto pr, categoria c, proveedor  p WHERE pr.estado=1 and pr.categoria_id= c.id and pr.proveedor_id=p.id order by pr.nombre asc");
+        PreparedStatement ps = con.prepareStatement("SELECT pr.id, pr.nombre, precio, precio_comercial, c.nombre, p.nombre_empresa FROM producto pr, categoria c, proveedor  p WHERE pr.estado=1 and pr.categoria_id= c.id and pr.proveedor_id=p.id order by pr.id asc");
         ResultSet rs = ps.executeQuery();
         Object[] rows;
         while (rs.next()) {
@@ -180,6 +197,20 @@ public final class principal extends javax.swing.JFrame {
         btnEliminarProd = new javax.swing.JButton();
         jTabbedPane4 = new javax.swing.JTabbedPane();
         jTabbedPane5 = new javax.swing.JTabbedPane();
+        jTabbedPane7 = new javax.swing.JTabbedPane();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        txtPrimerSintoma = new javax.swing.JTextField();
+        btnPrueba = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jtConsulta = new javax.swing.JTable();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        txtEnfermedad = new javax.swing.JTextField();
+        btnPrueba1 = new javax.swing.JButton();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jtConsultaEnfermedad = new javax.swing.JTable();
         lblBienvenida = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -367,6 +398,102 @@ public final class principal extends javax.swing.JFrame {
         jTabbedPane1.addTab("Registrar venta", jTabbedPane4);
         jTabbedPane1.addTab("Reportes", jTabbedPane5);
 
+        jLabel8.setText("Digite el síntoma");
+
+        btnPrueba.setText("consultar");
+        btnPrueba.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPruebaActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Sintomas mas comunes");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jScrollPane4.setViewportView(jtConsulta);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane4)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtPrimerSintoma, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnPrueba)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)))
+                .addContainerGap(127, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(txtPrimerSintoma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPrueba)
+                    .addComponent(jButton1))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(54, Short.MAX_VALUE))
+        );
+
+        jTabbedPane7.addTab("Sintoma", jPanel2);
+
+        jLabel9.setText("Digite enfermedad :");
+
+        btnPrueba1.setText("consultar");
+        btnPrueba1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrueba1ActionPerformed(evt);
+            }
+        });
+
+        jScrollPane5.setViewportView(jtConsultaEnfermedad);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 509, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtEnfermedad, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnPrueba1)))
+                .addContainerGap(127, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(txtEnfermedad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPrueba1))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(47, Short.MAX_VALUE))
+        );
+
+        jTabbedPane7.addTab("Enfermedad", jPanel3);
+
+        jTabbedPane1.addTab("Enfermedades", jTabbedPane7);
+
         lblBienvenida.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblBienvenida.setText("Bienvenid@");
 
@@ -394,8 +521,8 @@ public final class principal extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addComponent(lblBienvenida, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1)
-                .addGap(23, 23, 23))
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -424,6 +551,27 @@ public final class principal extends javax.swing.JFrame {
     private void btnEliminarProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarProdActionPerformed
         eliminarProducto();        // TODO add your handling code here:
     }//GEN-LAST:event_btnEliminarProdActionPerformed
+
+    private void btnPruebaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPruebaActionPerformed
+       primerSintoma=txtPrimerSintoma.getText();
+        consultarCodigo(primerSintoma);
+
+        filtrar();
+    }//GEN-LAST:event_btnPruebaActionPerformed
+
+    private void btnPrueba1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrueba1ActionPerformed
+        enfermedad=txtEnfermedad.getText();
+        primerSintoma=idEnfermedad;
+        consultarGravedad(enfermedad);
+        consultarCodigoEnfermedad(enfermedad);
+            
+      
+        cargar();
+    }//GEN-LAST:event_btnPrueba1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -462,8 +610,11 @@ public final class principal extends javax.swing.JFrame {
     private javax.swing.JTable Tabla;
     private javax.swing.JButton btnEliminarProd;
     public javax.swing.JButton btnGuardarProducto;
+    private javax.swing.JButton btnPrueba;
+    private javax.swing.JButton btnPrueba1;
     private javax.swing.JComboBox cboCategoria;
     public javax.swing.JComboBox cboProveedor;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -471,20 +622,31 @@ public final class principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane4;
     private javax.swing.JTabbedPane jTabbedPane5;
+    private javax.swing.JTabbedPane jTabbedPane7;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JTable jtConsulta;
+    private javax.swing.JTable jtConsultaEnfermedad;
     private javax.swing.JLabel lblAviso;
     private javax.swing.JLabel lblBienvenida;
     public javax.swing.JTextField txtCodigoProducto;
+    private javax.swing.JTextField txtEnfermedad;
     public javax.swing.JTextField txtNombreProducto;
+    private javax.swing.JTextField txtPrimerSintoma;
     public javax.swing.JTextField txtValor;
     public javax.swing.JTextField txtValorComercial;
     // End of variables declaration//GEN-END:variables
@@ -511,5 +673,104 @@ public final class principal extends javax.swing.JFrame {
             String base = rse.getString(1);
             cboProveedor.addItem(base);
         }
+    }
+     public void consultarCodigo(String primerSintoma) {
+        sql = "SELECT id FROM sintoma WHERE nombre= ".concat(
+                "\'").concat(primerSintoma).concat("\';");
+        try {
+            prepararConsulta = conection.prepareStatement(sql);
+            mostrarResultado = prepararConsulta.executeQuery();
+            while (mostrarResultado.next()) {
+                resultadoConsulta.add(mostrarResultado.getString(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ConsultaEnfermedades.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("error");
+        }
+
+    }
+
+    public void filtrar() {
+        String[] titulos = {"POSIBLE ENFERMEDAD","GRAVEDAD","RECOMENDACION"};
+        String[] registro = new String[3];
+        for (int i = 0; i < resultadoConsulta.size(); i++) {
+            idSintoma = String.valueOf(resultadoConsulta.get(i));
+        }
+        sql = "SELECT e.nombre,g.nombre,p.nombre FROM producto p,enfermedad e,enfermedad_sintoma es,gravedad g,sintoma s "
+                + "WHERE s.id ="+idSintoma+"  AND s.id= es.sintoma_id AND e.id= es.enfermedad_id AND p.id=s.producto_id AND g.id=e.gravedad_id GROUP BY e.nombre;";
+        try {
+            model = new DefaultTableModel(null, titulos);
+            prepararConsulta = conection.prepareStatement(sql);
+            mostrarResultado = prepararConsulta.executeQuery();
+            while (mostrarResultado.next()) {
+                enfermedadSintomas.add(mostrarResultado.getString(1));
+                registro[0] = mostrarResultado.getString(1);
+                registro[1] = mostrarResultado.getString(2);
+                registro[2] = mostrarResultado.getString(3);
+                model.addRow(registro);
+            }
+            jtConsulta.setModel(model);
+        } catch (SQLException ex) {
+            Logger.getLogger(logica.principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void cargar() {
+        String[] titulos = {"ENFERMEDAD", "GRAVEDAD", "RECOMENDACION"};
+        String[] registro = new String[3];
+        for (int i = 0; i < resultadoConsulta2.size(); i++) {
+            idGravedad = String.valueOf(resultadoConsulta2.get(i));
+        }
+        for(int i=0;i<resultadoConsulta3.size();i++){
+            idEnfermedad=String.valueOf(resultadoConsulta3.get(i));
+        }
+        sql = "SELECT e.nombre,g.nombre,p.nombre FROM sintoma s,enfermedad e,producto p,gravedad g,enfermedad_sintoma es WHERE e.id= "+idEnfermedad+" AND e.id=es.enfermedad_id AND s.producto_id=p.id AND g.id= "+idGravedad+" AND s.id = es.sintoma_id GROUP BY p.nombre;";
+        try {
+            model = new DefaultTableModel(null, titulos);
+            prepararConsulta = conection.prepareStatement(sql);
+            mostrarResultado = prepararConsulta.executeQuery();
+            while (mostrarResultado.next()) {
+                registro[0] = mostrarResultado.getString(1);
+                registro[1] = mostrarResultado.getString(2);
+                registro[2]=mostrarResultado.getString(3);
+                model.addRow(registro);
+            }
+            jtConsultaEnfermedad.setModel(model);
+        } catch (SQLException ex) {
+            Logger.getLogger(logica.principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
+    public void consultarGravedad(String enfermedad) {
+        sql = "SELECT gravedad_id FROM enfermedad WHERE nombre= ".concat(
+                "\'").concat(enfermedad).concat("\';");
+        try {
+            prepararConsulta = conection.prepareStatement(sql);
+            mostrarResultado = prepararConsulta.executeQuery();
+            while (mostrarResultado.next()) {
+                resultadoConsulta2.add(mostrarResultado.getString(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ConsultaEnfermedades.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("error");
+        }
+
+    }
+    
+     public void consultarCodigoEnfermedad(String primerEnfermedad) {
+        sql = "SELECT id FROM enfermedad WHERE nombre= ".concat(
+                "\'").concat(primerEnfermedad).concat("\';");
+        try {
+            prepararConsulta = conection.prepareStatement(sql);
+            mostrarResultado = prepararConsulta.executeQuery();
+            while (mostrarResultado.next()) {
+                resultadoConsulta3.add(mostrarResultado.getString(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ConsultaEnfermedades.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("error");
+        }
+
     }
 }

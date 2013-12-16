@@ -21,8 +21,7 @@ import java.util.logging.Logger;
 public class ConsultaEnfermedades {
     
     public String sql;
-    public Conexion conexion=new Conexion();
-    public Connection conection=conexion.conexionBase();
+     Connection con;
     public PreparedStatement prepararConsulta;
     public ResultSet mostrarResultado;
     public String primerSintoma;
@@ -30,6 +29,10 @@ public class ConsultaEnfermedades {
     public String tercerSintoma;
     public ArrayList resultadoConsulta=new ArrayList();
     public ArrayList enfermedadSintomas=new ArrayList();
+
+    public ConsultaEnfermedades() throws SQLException {
+        this.con = recursos.dataBase.getConexion();
+    }
     
     public void consultarCodigo(String primerSintoma,String segundoSintoma,String tercerSintoma){
         sql="SELECT s.id".concat(
@@ -38,7 +41,7 @@ public class ConsultaEnfermedades {
             "OR s.nombre= \'").concat(segundoSintoma).concat("\'").concat(
             "OR s.nombre= \'").concat(tercerSintoma).concat("\'").concat(";");
         try {
-            prepararConsulta=conection.prepareStatement(sql);
+            prepararConsulta=con.prepareStatement(sql);
             mostrarResultado=prepararConsulta.executeQuery();
             while(mostrarResultado.next()){
                 resultadoConsulta.add(mostrarResultado.getString(1));
@@ -59,7 +62,7 @@ public class ConsultaEnfermedades {
             "OR s.id= \' ").concat(segundoSintoma).concat("\'").concat(
             "OR s.id= \' ").concat(tercerSintoma).concat("\'"));
         try {
-            prepararConsulta=conection.prepareStatement(sql);
+            prepararConsulta=con.prepareStatement(sql);
             mostrarResultado=prepararConsulta.executeQuery();
             while(mostrarResultado.next()){
                 enfermedadSintomas.add(mostrarResultado.getString(1));

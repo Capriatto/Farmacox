@@ -74,4 +74,18 @@ public class Conexion {
             e.printStackTrace();
         }
     }
+public boolean update(String valores, String id)
+    {
+        boolean res = false;        
+        String q = " UPDATE persona SET " + valores + " WHERE p_id= " + id;
+        try {
+            try (PreparedStatement pstm = connection.prepareStatement(q)) {
+                pstm.execute();
+            }
+            res=true;
+         }catch(SQLException e){            
+            System.out.println(e);
+        }
+        return res;
+    }
 }

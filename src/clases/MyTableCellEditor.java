@@ -10,10 +10,6 @@ package clases;
  *
  * @author capriatto
  */
-public class agregar_producto {
-   
-    public void accion(){
-    
-    }
+public class MyTableCellEditor {
     
 }

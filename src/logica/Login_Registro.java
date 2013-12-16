@@ -4,6 +4,7 @@
  */
 package logica;
 
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -94,7 +95,7 @@ public class Login_Registro extends javax.swing.JFrame {
             }
         });
 
-        lblMensaje.setForeground(new java.awt.Color(255, 0, 0));
+        lblMensaje.setForeground(new java.awt.Color(51, 102, 255));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -199,10 +200,12 @@ public class Login_Registro extends javax.swing.JFrame {
             preparar.setString(3, contrasena);
             preparar.setString(4, telefono);
             preparar.executeUpdate();
-            lblMensaje.setText("SE REGISTRO CON EXITO");
+            Toolkit.getDefaultToolkit().beep();
+            lblMensaje.setText("Se registró con éxito.");
 
         } catch (SQLException ex) {
-            lblMensaje.setText("NO SE REGISTRO CON EXITO");
+            Toolkit.getDefaultToolkit().beep();
+            lblMensaje.setText("No se pudo guardar este usuario.");
             Logger.getLogger(Login_Registro.class.getName()).log(Level.SEVERE, null, ex);
         }
 

@@ -60,6 +60,10 @@ public final class principal extends javax.swing.JFrame {
         RestrictedTextField res = new RestrictedTextField(txtCodigoProducto);
         RestrictedTextField res1 = new RestrictedTextField(txtValor);
         RestrictedTextField res2 = new RestrictedTextField(txtValorComercial);
+        RestrictedTextField res3 = new RestrictedTextField(txtPrimerSintoma);
+        RestrictedTextField res4 = new RestrictedTextField(txtEnfermedad);
+        res3.setOnlyText(true);
+        res4.setOnlyText(true);
         res.setLimit(3);
         res1.setOnlyNums(true);
         res2.setOnlyNums(true);

@@ -12,7 +12,9 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import Atxy2k.CustomTextField.RestrictedTextField;
+import clases.ConsultaEnfermedades;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JButton;
@@ -26,6 +28,21 @@ import javax.swing.table.DefaultTableModel;
  */
 public final class principal extends javax.swing.JFrame {
 
+    public ResultSet mostrarResultado;
+    public ArrayList resultadoConsulta = new ArrayList();
+    public ArrayList resultadoConsulta2 = new ArrayList();
+    public ArrayList resultadoConsulta3 = new ArrayList();
+    public ArrayList enfermedadSintomas = new ArrayList();
+    public String primerSintoma;
+    public String primerEnfermedad;
+    public String enfermedad;
+    public String idSintoma;
+    public String idGravedad;
+    public String idEnfermedad;
+    DefaultTableModel model;
+    String sql;
+    Connection con;
+    PreparedStatement prepararConsulta;//Es el canal a través del cual se le envían instrucciones SQL
     String labelNick;
 
     /**
@@ -181,6 +198,22 @@ public final class principal extends javax.swing.JFrame {
         jTabbedPane4 = new javax.swing.JTabbedPane();
         jTabbedPane5 = new javax.swing.JTabbedPane();
         jTabbedPane2 = new javax.swing.JTabbedPane();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        txtPrimerSintoma = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jtConsulta = new javax.swing.JTable();
+        jButton3 = new javax.swing.JButton();
+        btnPrueba = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        txtEnfermedad = new javax.swing.JTextField();
+        jButton5 = new javax.swing.JButton();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jtConsultaEnfermedad = new javax.swing.JTable();
+        btnPrueba1 = new javax.swing.JButton();
         lblBienvenida = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -351,7 +384,7 @@ public final class principal extends javax.swing.JFrame {
                     .addComponent(btnGuardarProducto))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                         .addComponent(lblAviso, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnEliminarProd)
@@ -367,6 +400,111 @@ public final class principal extends javax.swing.JFrame {
         jTabbedPane1.addTab("Productos", jToolBar1);
         jTabbedPane1.addTab("Registrar venta", jTabbedPane4);
         jTabbedPane1.addTab("Reportes", jTabbedPane5);
+
+        jLabel8.setText("Escriba el sintoma:");
+
+        jButton1.setText("Consultar");
+
+        jButton2.setText("Sintomas ");
+
+        jScrollPane4.setViewportView(jtConsulta);
+
+        jButton3.setText("Sintomas mas comunes");
+
+        btnPrueba.setText("Consultar");
+        btnPrueba.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPruebaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 532, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtPrimerSintoma, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40)
+                        .addComponent(btnPrueba)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton3)))
+                .addGap(252, 252, 252)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(txtPrimerSintoma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3)
+                    .addComponent(btnPrueba))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(40, Short.MAX_VALUE))
+        );
+
+        jTabbedPane2.addTab("Sintoma", jPanel2);
+
+        jLabel9.setText("Digite una enfermedad:");
+
+        jButton5.setText("Consultar");
+
+        jScrollPane5.setViewportView(jtConsultaEnfermedad);
+
+        btnPrueba1.setText("Consultar");
+        btnPrueba1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrueba1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(36, 36, 36)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 483, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtEnfermedad, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnPrueba1)
+                        .addGap(385, 385, 385)
+                        .addComponent(jButton5)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(txtEnfermedad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton5)
+                    .addComponent(btnPrueba1))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(42, Short.MAX_VALUE))
+        );
+
+        jTabbedPane2.addTab("Enfermedad", jPanel3);
+
         jTabbedPane1.addTab("Consultar enfermedad por sintoma", jTabbedPane2);
 
         lblBienvenida.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -396,8 +534,8 @@ public final class principal extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addComponent(lblBienvenida, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1)
-                .addGap(23, 23, 23))
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 360, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -426,6 +564,23 @@ public final class principal extends javax.swing.JFrame {
     private void btnEliminarProdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarProdActionPerformed
         eliminarProducto();        // TODO add your handling code here:
     }//GEN-LAST:event_btnEliminarProdActionPerformed
+
+    private void btnPruebaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPruebaActionPerformed
+ primerSintoma=txtPrimerSintoma.getText();
+        consultarCodigo(primerSintoma);
+
+        filtrar();
+    }//GEN-LAST:event_btnPruebaActionPerformed
+
+    private void btnPrueba1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrueba1ActionPerformed
+       enfermedad=txtEnfermedad.getText();
+        primerSintoma=idEnfermedad;
+        consultarGravedad(enfermedad);
+        consultarCodigoEnfermedad(enfermedad);
+            
+      
+        cargar();
+    }//GEN-LAST:event_btnPrueba1ActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -464,8 +619,14 @@ public final class principal extends javax.swing.JFrame {
     private javax.swing.JTable Tabla;
     private javax.swing.JButton btnEliminarProd;
     public javax.swing.JButton btnGuardarProducto;
+    private javax.swing.JButton btnPrueba;
+    private javax.swing.JButton btnPrueba1;
     private javax.swing.JComboBox cboCategoria;
     public javax.swing.JComboBox cboProveedor;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -473,10 +634,16 @@ public final class principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTabbedPane jTabbedPane4;
@@ -484,10 +651,14 @@ public final class principal extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JTable jtConsulta;
+    private javax.swing.JTable jtConsultaEnfermedad;
     private javax.swing.JLabel lblAviso;
     private javax.swing.JLabel lblBienvenida;
     public javax.swing.JTextField txtCodigoProducto;
+    private javax.swing.JTextField txtEnfermedad;
     public javax.swing.JTextField txtNombreProducto;
+    private javax.swing.JTextField txtPrimerSintoma;
     public javax.swing.JTextField txtValor;
     public javax.swing.JTextField txtValorComercial;
     // End of variables declaration//GEN-END:variables
@@ -514,5 +685,111 @@ public final class principal extends javax.swing.JFrame {
             String base = rse.getString(1);
             cboProveedor.addItem(base);
         }
+    }
+    
+    public void consultarCodigo(String primerSintoma) {
+        sql = "SELECT id FROM sintoma WHERE nombre= ".concat(
+                "\'").concat(primerSintoma).concat("\';");
+        try {
+            con= bd.Conexion.getConexion();
+            prepararConsulta = con.prepareStatement(sql);
+            mostrarResultado = prepararConsulta.executeQuery();
+            while (mostrarResultado.next()) {
+                resultadoConsulta.add(mostrarResultado.getString(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ConsultaEnfermedades.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("error");
+        }
+
+    }
+
+    public void filtrar() {
+        String[] titulos = {"POSIBLE ENFERMEDAD","GRAVEDAD","RECOMENDACION"};
+        String[] registro = new String[3];
+        for (int i = 0; i < resultadoConsulta.size(); i++) {
+            idSintoma = String.valueOf(resultadoConsulta.get(i));
+        }
+        sql = "SELECT e.nombre,g.nombre,p.nombre FROM producto p,enfermedad e,enfermedad_sintoma es,gravedad g,sintoma s "
+                + "WHERE s.id ="+idSintoma+"  AND s.id= es.sintoma_id AND e.id= es.enfermedad_id AND p.id=s.producto_id AND g.id=e.gravedad_id GROUP BY e.nombre;";
+        try {
+            model = new DefaultTableModel(null, titulos);
+            con= bd.Conexion.getConexion();
+            prepararConsulta = con.prepareStatement(sql);
+            mostrarResultado = prepararConsulta.executeQuery();
+            while (mostrarResultado.next()) {
+                enfermedadSintomas.add(mostrarResultado.getString(1));
+                registro[0] = mostrarResultado.getString(1);
+                registro[1] = mostrarResultado.getString(2);
+                registro[2] = mostrarResultado.getString(3);
+                model.addRow(registro);
+            }
+            jtConsulta.setModel(model);
+        } catch (SQLException ex) {
+            Logger.getLogger(logica.principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void cargar() {
+        String[] titulos = {"ENFERMEDAD", "GRAVEDAD", "RECOMENDACION"};
+        String[] registro = new String[3];
+        for (int i = 0; i < resultadoConsulta2.size(); i++) {
+            idGravedad = String.valueOf(resultadoConsulta2.get(i));
+        }
+        for(int i=0;i<resultadoConsulta3.size();i++){
+            idEnfermedad=String.valueOf(resultadoConsulta3.get(i));
+        }
+        sql = "SELECT e.nombre,g.nombre,p.nombre FROM sintoma s,enfermedad e,producto p,gravedad g,enfermedad_sintoma es WHERE e.id= "+idEnfermedad+" AND e.id=es.enfermedad_id AND s.producto_id=p.id AND g.id= "+idGravedad+" AND s.id = es.sintoma_id GROUP BY p.nombre;";
+        try {
+            model = new DefaultTableModel(null, titulos);
+            con= bd.Conexion.getConexion();
+            prepararConsulta = con.prepareStatement(sql);
+            mostrarResultado = prepararConsulta.executeQuery();
+            while (mostrarResultado.next()) {
+                registro[0] = mostrarResultado.getString(1);
+                registro[1] = mostrarResultado.getString(2);
+                registro[2]=mostrarResultado.getString(3);
+                model.addRow(registro);
+            }
+            jtConsultaEnfermedad.setModel(model);
+        } catch (SQLException ex) {
+            Logger.getLogger(logica.principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
+    public void consultarGravedad(String enfermedad) {
+        sql = "SELECT gravedad_id FROM enfermedad WHERE nombre= ".concat(
+                "\'").concat(enfermedad).concat("\';");
+        try {
+            con= bd.Conexion.getConexion();
+            prepararConsulta = con.prepareStatement(sql);
+            mostrarResultado = prepararConsulta.executeQuery();
+            while (mostrarResultado.next()) {
+                resultadoConsulta2.add(mostrarResultado.getString(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ConsultaEnfermedades.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("error");
+        }
+
+    }
+    
+     public void consultarCodigoEnfermedad(String primerEnfermedad) {
+        sql = "SELECT id FROM enfermedad WHERE nombre= ".concat(
+                "\'").concat(primerEnfermedad).concat("\';");
+        try {
+            con= bd.Conexion.getConexion();
+            prepararConsulta = con.prepareStatement(sql);
+            mostrarResultado = prepararConsulta.executeQuery();
+            while (mostrarResultado.next()) {
+                resultadoConsulta3.add(mostrarResultado.getString(1));
+                System.out.println(mostrarResultado.getString(1));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ConsultaEnfermedades.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("error");
+        }
+
     }
 }

@@ -12,8 +12,12 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import Atxy2k.CustomTextField.RestrictedTextField;
+import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -75,7 +79,6 @@ public final class principal extends javax.swing.JFrame {
 
     public void tabla() throws SQLException {
 //        Modelando tabla
-
         Object columnNames[] = {"Codigo", "Nombre", "Valor", "Valor Comercial", "Categoria", "Proveedor"};
         DefaultTableModel mTableModel = new DefaultTableModel(null, columnNames);
         Tabla.setModel(mTableModel);
@@ -94,7 +97,7 @@ public final class principal extends javax.swing.JFrame {
 
     public void eliminarProducto() {
         try {
-            int dialogResult = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea eliminar este producto?", "Warning", JOptionPane.YES_NO_OPTION);
+            int dialogResult = JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea eliminar este producto?", "Advertencia Farmacox", JOptionPane.YES_NO_OPTION);
             if (dialogResult == JOptionPane.YES_OPTION) {
                 DefaultTableModel model = (DefaultTableModel) Tabla.getModel();
                 int rowSelected = Tabla.getSelectedRow();
@@ -105,9 +108,39 @@ public final class principal extends javax.swing.JFrame {
                 model.removeRow(rowSelected);
                 tabla();
             }
-
         } catch (SQLException ex) {
             Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void editarProducto() {
+    }
+
+    public void tableChanged(TableModelEvent e) {
+        if (e.getType() == TableModelEvent.UPDATE) {
+            int col = Tabla.getSelectedColumn();
+            int row = Tabla.getSelectedRow();
+//do the update query on this row  
+
+            try {
+                Connection cone = bd.Conexion.getConexion();
+                try (PreparedStatement ps = cone.prepareStatement("UPDATE producto SET id = ?,nombre = ?,precio = ?, precio_comercial=?, estado=?,categoria_id=?. proveedor_id=?  WHERE id = " + row)) {
+                    ps.setInt(1, (Integer) Tabla.getValueAt(row, 1));
+                    ps.setString(2, (String) Tabla.getValueAt(row, 2));
+                    ps.setDouble(3, (Double) Tabla.getValueAt(row, 3));
+                    ps.setDouble(4, (Double) Tabla.getValueAt(row, 4));
+                    ps.setBoolean(5, (Boolean) Tabla.getValueAt(row, 5));
+                    ps.setInt(6, (Integer) Tabla.getValueAt(row, 6));
+                    ps.setInt(7, (Integer) Tabla.getValueAt(row, 7));
+
+
+                    ps.executeUpdate();
+                }
+                bd.Conexion.liberaConexion(cone);
+
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 

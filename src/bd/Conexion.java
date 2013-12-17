@@ -78,7 +78,7 @@ public class Conexion {
     public boolean update(String valores, String id)
     {
         boolean res = false;        
-        String q = " UPDATE persona SET " + valores + " WHERE p_id= " + id;
+        String q = " UPDATE producto SET " + valores + " WHERE id= " + id;
         try {
             Connection con= bd.Conexion.getConexion();
             PreparedStatement pstm = con.prepareStatement(q);
@@ -88,6 +88,9 @@ public class Conexion {
          }catch(SQLException e){            
             System.out.println(e);
         }
+        JOptionPane.showMessageDialog(null, "Valor actualizado satisfactoriamente");
         return res;
+        
     }
+    
 }

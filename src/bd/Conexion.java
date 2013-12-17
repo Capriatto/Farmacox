@@ -74,4 +74,23 @@ public class Conexion {
             e.printStackTrace();
         }
     }
+    
+    public boolean update(String valores, String id)
+    {
+        boolean res = false;        
+        String q = " UPDATE producto SET " + valores + " WHERE id= " + id;
+        try {
+            Connection con= bd.Conexion.getConexion();
+            PreparedStatement pstm = con.prepareStatement(q);
+            pstm.execute();
+            pstm.close();
+            res=true;
+         }catch(SQLException e){            
+            System.out.println(e);
+        }
+        JOptionPane.showMessageDialog(null, "Valor actualizado satisfactoriamente");
+        return res;
+        
+    }
+    
 }

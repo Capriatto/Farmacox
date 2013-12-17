@@ -5,6 +5,7 @@
 package logica;
 
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -71,6 +72,17 @@ public class Login_Usuario extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        txtNickname.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNicknameActionPerformed(evt);
+            }
+        });
+        txtNickname.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNicknameKeyTyped(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Nombre de Usuario:");
@@ -223,6 +235,29 @@ txtNickname.setText("");
 txtContraseña.setText("");
 txtNickname.requestFocusInWindow();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtNicknameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNicknameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNicknameActionPerformed
+
+    private void txtNicknameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNicknameKeyTyped
+ char car = evt.getKeyChar();        
+if((car<'a' || car>'z') && (car<'A' || car>'Z')             
+    && car !='á' //Minúsculas             
+    && car !='é'            
+    && car !='í'            
+    && car !='ó'           
+    && car !='ú'   
+    && car !='Á' //Mayúsculas             
+    && car !='É'            
+    && car !='Í'            
+    && car !='Ó'           
+    && car !='Ú'             
+    && (car!=(char)KeyEvent.VK_SPACE))
+{      
+  evt.consume();   
+}       // TODO add your handling code here:
+    }//GEN-LAST:event_txtNicknameKeyTyped
 
     /**
      * @param args the command line arguments

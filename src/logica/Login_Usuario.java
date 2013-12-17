@@ -32,10 +32,6 @@ public class Login_Usuario extends javax.swing.JFrame {
         //Esto es para preparar la consulta
         PreparedStatement preparar;
         
-        
-       
-        
-        
         //Result set
         ResultSet result;
         

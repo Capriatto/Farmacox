@@ -17,7 +17,10 @@ import bd.Conexion;
 import clases.ConsultaEnfermedades;
 import clases.Reportes;
 import java.awt.Dimension;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
@@ -29,7 +32,6 @@ import javax.swing.table.DefaultTableModel;
 public final class principal extends javax.swing.JFrame {
 
     private bd.Conexion db = new Conexion();
-//    private Object[][] dtPersona;
     public ResultSet mostrarResultado;
     public ArrayList resultadoConsulta = new ArrayList();
     public ArrayList resultadoConsulta2 = new ArrayList();
@@ -55,6 +57,9 @@ public final class principal extends javax.swing.JFrame {
         tabla();
         setLocationRelativeTo(null);
         labelNick = nick;
+        btnSalir.setOpaque(true);
+        btnSalir.setContentAreaFilled(false);
+        btnSalir.setBorderPainted(false);
         lblBienvenida.setText("Bienvenid@: " + labelNick);
         llenarCategorias();
         llenarProveedores();
@@ -65,7 +70,7 @@ public final class principal extends javax.swing.JFrame {
         res1.setOnlyNums(true);
         res2.setOnlyNums(true);
         DefaultTableModel model = (DefaultTableModel) Tabla.getModel();
-        Tabla.setIntercellSpacing(new Dimension(0,0));
+        Tabla.setIntercellSpacing(new Dimension(0, 0));
         Tabla.setRowHeight(27);
         Tabla.getColumnModel().getColumn(0).setMaxWidth(0);
         Tabla.getColumnModel().getColumn(0).setMinWidth(0);
@@ -74,7 +79,7 @@ public final class principal extends javax.swing.JFrame {
         Tabla.getColumnModel().getColumn(1).setCellEditor(new MyTableCellEditor(db, "nombre"));//Columna Nombre
         Tabla.getColumnModel().getColumn(2).setCellEditor(new MyTableCellEditor(db, "precio"));//Columna Apellido
         Tabla.getColumnModel().getColumn(3).setCellEditor(new MyTableCellEditor(db, "precio_comercial"));//Columna Edad
-     
+
 
     }
 
@@ -231,6 +236,7 @@ public final class principal extends javax.swing.JFrame {
         jtConsultaEnfermedad = new javax.swing.JTable();
         btnPrueba1 = new javax.swing.JButton();
         lblBienvenida = new javax.swing.JLabel();
+        btnSalir = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -466,6 +472,15 @@ public final class principal extends javax.swing.JFrame {
 
         jLabel8.setText("Escriba el sintoma:");
 
+        txtPrimerSintoma.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPrimerSintomaKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPrimerSintomaKeyTyped(evt);
+            }
+        });
+
         jButton1.setText("Consultar");
 
         jButton2.setText("Sintomas ");
@@ -518,6 +533,12 @@ public final class principal extends javax.swing.JFrame {
 
         jLabel9.setText("Digite una enfermedad:");
 
+        txtEnfermedad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtEnfermedadKeyTyped(evt);
+            }
+        });
+
         jButton5.setText("Consultar");
 
         jScrollPane5.setViewportView(jtConsultaEnfermedad);
@@ -568,6 +589,15 @@ public final class principal extends javax.swing.JFrame {
         lblBienvenida.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblBienvenida.setText("Bienvenid@");
 
+        btnSalir.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnSalir.setText("Salir");
+        btnSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -577,11 +607,13 @@ public final class principal extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 705, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addContainerGap(25, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 378, Short.MAX_VALUE)
-                        .addComponent(lblBienvenida, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(229, 229, 229)
+                        .addComponent(lblBienvenida, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSalir))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -590,10 +622,12 @@ public final class principal extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(19, 19, 19)
                         .addComponent(jLabel1))
-                    .addComponent(lblBienvenida, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblBienvenida, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnSalir)))
+                .addGap(13, 13, 13)
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
@@ -666,6 +700,56 @@ public final class principal extends javax.swing.JFrame {
             Logger.getLogger(principal.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnReporteProductoActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+this.dispose();
+System.gc();
+Login_Usuario login= new Login_Usuario();
+login.setVisible(true); // TODO add your handling code here:
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void txtPrimerSintomaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrimerSintomaKeyReleased
+      // TODO add your handling code here:
+    }//GEN-LAST:event_txtPrimerSintomaKeyReleased
+
+    private void txtPrimerSintomaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrimerSintomaKeyTyped
+char car = evt.getKeyChar();        
+if((car<'a' || car>'z') && (car<'A' || car>'Z')             
+    && car !='á' //Minúsculas             
+    && car !='é'            
+    && car !='í'            
+    && car !='ó'           
+    && car !='ú'   
+    && car !='Á' //Mayúsculas             
+    && car !='É'            
+    && car !='Í'            
+    && car !='Ó'           
+    && car !='Ú'             
+    && (car!=(char)KeyEvent.VK_SPACE))
+{      
+  evt.consume();   
+}
+// TODO add your handling code here:
+    }//GEN-LAST:event_txtPrimerSintomaKeyTyped
+
+    private void txtEnfermedadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEnfermedadKeyTyped
+char car = evt.getKeyChar();        
+if((car<'a' || car>'z') && (car<'A' || car>'Z')             
+    && car !='á' //Minúsculas             
+    && car !='é'            
+    && car !='í'            
+    && car !='ó'           
+    && car !='ú'   
+    && car !='Á' //Mayúsculas             
+    && car !='É'            
+    && car !='Í'            
+    && car !='Ó'           
+    && car !='Ú'             
+    && (car!=(char)KeyEvent.VK_SPACE))
+{      
+  evt.consume();   
+}        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEnfermedadKeyTyped
     /**
      * @param args the command line arguments
      */
@@ -709,6 +793,7 @@ public final class principal extends javax.swing.JFrame {
     private javax.swing.JButton btnReporteProducto;
     private javax.swing.JButton btnReporteUsarios;
     private javax.swing.JButton btnReporteVentas;
+    private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox cboCategoria;
     public javax.swing.JComboBox cboProveedor;
     private javax.swing.JButton jButton1;

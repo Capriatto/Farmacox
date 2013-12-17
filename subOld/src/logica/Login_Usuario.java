@@ -73,6 +73,14 @@ public class Login_Usuario extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+<<<<<<< HEAD
+        txtNickname.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNicknameActionPerformed(evt);
+            }
+        });
+=======
+>>>>>>> sebastian
         txtNickname.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtNicknameKeyTyped(evt);
@@ -231,8 +239,17 @@ txtContraseña.setText("");
 txtNickname.requestFocusInWindow();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+<<<<<<< HEAD
+    private void txtNicknameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNicknameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNicknameActionPerformed
+
     private void txtNicknameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNicknameKeyTyped
-char car = evt.getKeyChar();        
+ char car = evt.getKeyChar();        
+=======
+    private void txtNicknameKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNicknameKeyTyped
+  char car = evt.getKeyChar();        
+>>>>>>> sebastian
 if((car<'a' || car>'z') && (car<'A' || car>'Z')             
     && car !='á' //Minúsculas             
     && car !='é'            
@@ -247,7 +264,11 @@ if((car<'a' || car>'z') && (car<'A' || car>'Z')
     && (car!=(char)KeyEvent.VK_SPACE))
 {      
   evt.consume();   
-}        // TODO add your handling code here:
+<<<<<<< HEAD
+}       // TODO add your handling code here:
+=======
+}      // TODO add your handling code here:
+>>>>>>> sebastian
     }//GEN-LAST:event_txtNicknameKeyTyped
 
     /**

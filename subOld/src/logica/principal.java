@@ -19,9 +19,10 @@ import clases.Reportes;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import javax.swing.InputMap;
+import javax.swing.JComponent;
 import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
 
@@ -79,8 +80,8 @@ public final class principal extends javax.swing.JFrame {
         Tabla.getColumnModel().getColumn(1).setCellEditor(new MyTableCellEditor(db, "nombre"));//Columna Nombre
         Tabla.getColumnModel().getColumn(2).setCellEditor(new MyTableCellEditor(db, "precio"));//Columna Apellido
         Tabla.getColumnModel().getColumn(3).setCellEditor(new MyTableCellEditor(db, "precio_comercial"));//Columna Edad
-
-
+     
+         
     }
 
     public void accion() throws SQLException {
@@ -265,6 +266,7 @@ public final class principal extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jTable2);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("FARMACOX");
         setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
